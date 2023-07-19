@@ -1,31 +1,16 @@
-import React, { useState } from "react";
+// App.js
+import React from "react";
+import usePasswordStrength from "./usePasswordStrength";
 import "./App.css";
 
 const App = () => {
-  const [password, setPassword] = useState("");
+  const { password, setPassword, strength } = usePasswordStrength();
 
   const handleChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const getPasswordStrength = () => {
-    if (password.length === 0) {
-      return "none";
-    } else if (password.length < 8) {
-      return "weak";
-    } else if (
-      /\d/.test(password) &&
-      /[a-zA-Z]/.test(password) &&
-      /[!@#$%^&*]/.test(password)
-    ) {
-      return "strong";
-    } else {
-      return "medium";
-    }
-  };
-
   const getStrengthColor = (section) => {
-    const strength = getPasswordStrength();
     if (strength === "none") {
       return "gray";
     } else if (strength === "weak") {
@@ -44,6 +29,7 @@ const App = () => {
         type="password"
         id="password-input"
         placeholder="Enter password"
+        value={password}
         onChange={handleChange}
       />
       <div className="strength-indicator">
